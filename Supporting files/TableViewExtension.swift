@@ -63,6 +63,7 @@ extension AllToDoViewController: UITableViewDelegate, UITableViewDataSource {
         if indexPath.section == 0 {
             cell.titleLabel.text = notCompletedTasks[indexPath.row].title
             cell.titleLabel.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+            cell.isCompletedButton.setImage(#imageLiteral(resourceName: "Квадрат").withRenderingMode(.alwaysOriginal), for: .normal)
             let iconId = notCompletedTasks[indexPath.row].iconId
             cell.iconImageView.image = iconsArray[Int(iconId)].withRenderingMode(.alwaysOriginal)
         } else {
@@ -70,6 +71,7 @@ extension AllToDoViewController: UITableViewDelegate, UITableViewDataSource {
             attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSMakeRange(0, attributeString.length))
             cell.titleLabel.attributedText = attributeString
             cell.titleLabel.textColor = #colorLiteral(red: 0, green: 0.5843137255, blue: 0.8823529412, alpha: 1)
+            cell.isCompletedButton.setImage(#imageLiteral(resourceName: "галочкаВКвадрате").withRenderingMode(.alwaysOriginal), for: .normal)
             let iconId = completedTasks[indexPath.row].iconId
             cell.iconImageView.image = iconsArray[Int(iconId)].withRenderingMode(.alwaysOriginal)
         }

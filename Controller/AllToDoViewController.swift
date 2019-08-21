@@ -14,6 +14,7 @@ class AllToDoViewController: UIViewController {
     var selectedItemSection: Int?
     var effect : UIVisualEffect!
     let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.light)
+    var blurEffectView = UIVisualEffectView()
     let iconsArray = [#imageLiteral(resourceName: "money"),#imageLiteral(resourceName: "support"),#imageLiteral(resourceName: "house"),#imageLiteral(resourceName: "news"),#imageLiteral(resourceName: "job"),#imageLiteral(resourceName: "idea"),#imageLiteral(resourceName: "info"),#imageLiteral(resourceName: "message")]
     var selectedIcon: Int?
     
