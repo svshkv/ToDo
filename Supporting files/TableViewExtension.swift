@@ -22,13 +22,10 @@ extension AllToDoViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            print("case 0")
             return notCompletedTasks.count
         case 1:
-            print("case 1")
             return completedTasks.count
         default:
-            print("case 2")
             return 1
         }
     }
@@ -61,11 +58,13 @@ extension AllToDoViewController: UITableViewDelegate, UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "todocell", for: indexPath) as! TableViewCell
         if indexPath.section == 0 {
+            cell.titleLabel.attributedText = .none
             cell.titleLabel.text = notCompletedTasks[indexPath.row].title
             cell.titleLabel.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
             cell.isCompletedButton.setImage(#imageLiteral(resourceName: "Квадрат").withRenderingMode(.alwaysOriginal), for: .normal)
             let iconId = notCompletedTasks[indexPath.row].iconId
             cell.iconImageView.image = iconsArray[Int(iconId)].withRenderingMode(.alwaysOriginal)
+            cell.isCompletedButton.tag = (indexPath.section * 1000) + indexPath.row
         } else {
             let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: completedTasks[indexPath.row].title ?? " ")
             attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSMakeRange(0, attributeString.length))
@@ -74,24 +73,10 @@ extension AllToDoViewController: UITableViewDelegate, UITableViewDataSource {
             cell.isCompletedButton.setImage(#imageLiteral(resourceName: "галочкаВКвадрате").withRenderingMode(.alwaysOriginal), for: .normal)
             let iconId = completedTasks[indexPath.row].iconId
             cell.iconImageView.image = iconsArray[Int(iconId)].withRenderingMode(.alwaysOriginal)
+            cell.isCompletedButton.tag = (indexPath.section * 1000) + indexPath.row
         }
-//        if indexPath.row == selectedItemIndex {
-//            if cell.textLabel?.text == toDoList[indexPath.row].details {
-//                cell.textLabel?.text = toDoList[indexPath.row].title
-//                cell.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-//            } else {
-//                cell.textLabel?.text = toDoList[indexPath.row].details
-//                cell.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-//            }
-//        } else {
-//
-//            cell.textLabel?.text = toDoList[indexPath.row].title
-//            cell.detailTextLabel?.text = ""
-//            cell.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-//
-//        }
+        cell.delegate = self
         return cell
-        //cell.detailTextLabel?.text = toDoList[indexPath.row].details
         
     }
     

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AllToDoViewController: UIViewController {
+class AllToDoViewController: UIViewController, cellDelegate {
 
     var selectedItemIndex: Int?
     var selectedItemSection: Int?
@@ -26,11 +26,16 @@ class AllToDoViewController: UIViewController {
     @IBOutlet weak var detailsTextView: UITextView!
     @IBOutlet weak var titleTextField: UITextField!
     
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         loadData()
-        
-        
+        setupSettings()
+    }
+
+    
+    fileprivate func setupSettings() {
         toDoTableView.delegate = self
         toDoTableView.dataSource = self
         toDoTableView.rowHeight = UITableView.automaticDimension
@@ -42,11 +47,7 @@ class AllToDoViewController: UIViewController {
         newToDoCollectionView.dataSource = self
         backButton.setImage(#imageLiteral(resourceName: "назад").withRenderingMode(.alwaysOriginal), for: .normal)
         addButton.setImage(#imageLiteral(resourceName: "плюс90").withRenderingMode(.alwaysOriginal), for: .normal)
-        
-        
-        // Do any additional setup after loading the view.
     }
-    
     
     func viewGetOut() {
         UIView.animate(withDuration: 0.4, animations: {
@@ -84,6 +85,10 @@ class AllToDoViewController: UIViewController {
         }
     }
     
+    func completedButtonPressed(onCell: TableViewCell) {
+        loadData()
+        toDoTableView.reloadData()
+    }
     
     @IBAction func cancelButtonPressed(_ sender: Any) {
         viewGetOut()

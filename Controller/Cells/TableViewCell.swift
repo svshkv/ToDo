@@ -10,6 +10,7 @@ import UIKit
 
 class TableViewCell: UITableViewCell {
 
+    weak var delegate: cellDelegate?
     @IBOutlet weak var isCompletedButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var iconImageView: UIImageView!
@@ -25,6 +26,19 @@ class TableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
-    @IBAction func isCompletedButtonPressed(_ sender: Any) {
+    @IBAction func isCompletedButtonPressed(_ sender: UIButton) {
+        let row = sender.tag % 1000
+        let section = sender.tag / 1000
+        print(row)
+        print(section)
+        if section == 0 {
+            let item = notCompletedTasks[row]
+            updateItem(item: item)
+        } else {
+            let item = completedTasks[row]
+            updateItem(item: item)
+        }
+        delegate?.completedButtonPressed(onCell: self)
+        
     }
 }
