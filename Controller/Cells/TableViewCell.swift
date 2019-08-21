@@ -2,7 +2,7 @@
 //  TableViewCell.swift
 //  ToDO
 //
-//  Created by Саша Руцман on 20.08.2019.
+//  Created by Саша Руцман on 21.08.2019.
 //  Copyright © 2019 Саша Руцман. All rights reserved.
 //
 
@@ -12,6 +12,8 @@ class TableViewCell: UITableViewCell {
 
     @IBOutlet weak var isCompletedButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var iconImageView: UIImageView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -24,7 +26,5 @@ class TableViewCell: UITableViewCell {
     }
 
     @IBAction func isCompletedButtonPressed(_ sender: Any) {
-        ///print("func isCompletedButtonPressed")
-        //isCompletedButton.imageView?.image = #imageLiteral(resourceName: "галочка")
     }
 }

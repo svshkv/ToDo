@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-extension ToDoTableViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension AllToDoViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyCell", for: indexPath as IndexPath) as! ToDoCollectionViewCell
