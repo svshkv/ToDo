@@ -94,7 +94,7 @@ class AllToDoViewController: UIViewController, cellDelegate {
     
     
     
-    func viewShow() {
+    func viewShow(_ title: String = "",_ details: String = "") {
         
         let mainWindow = UIApplication.shared.keyWindow!
         blurEffectView = UIVisualEffectView(effect: blurEffect)
@@ -103,6 +103,10 @@ class AllToDoViewController: UIViewController, cellDelegate {
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         mainWindow.addSubview(addToDoView)
+        
+        detailsTextView.text = details
+        titleTextField.text = title
+        
         addToDoView.layer.cornerRadius = 10
         addToDoView.center = self.view.center
         addToDoView.backgroundColor = .white
@@ -130,9 +134,15 @@ class AllToDoViewController: UIViewController, cellDelegate {
         if selectedItemIndex == nil {
             addItem(title: title, details: details, iconId: iconId)
         } else {
-            deleteItem(at: selectedItemSection!, at: selectedItemIndex!)
-            addItem(title: title, details: details, iconId: iconId)
+            var item: ToDoItems
+            if selectedItemSection == 0 {
+                item = notCompletedTasks[selectedItemIndex!]
+            } else {
+                item = completedTasks[selectedItemIndex!]
+            }
+            updateItem(item: item, title: title, details: details, iconId: iconId)
             selectedItemIndex = nil
+            selectedItemSection = nil
         }
         
         

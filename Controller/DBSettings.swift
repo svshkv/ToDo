@@ -81,7 +81,7 @@ func loadData() {
     
 }
 
-func updateItem(item: ToDoItems) {
+func updateIsCompletedItem(item: ToDoItems) {
     let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ToDoItems")
     fetchRequest.predicate = NSPredicate(format: "title = %@", item.title!)
     
@@ -92,6 +92,32 @@ func updateItem(item: ToDoItems) {
             // In my case, I only updated the first item in results
             results![0].setValue(!item.isCompleted, forKey: "isCompleted")
             results![0].setValue(Date(), forKey: "date")
+        }
+    } catch {
+        print("Fetch Failed: \(error)")
+    }
+    
+    do {
+        try context.save()
+    }
+    catch {
+        print("Saving Core Data Failed: \(error)")
+    }
+}
+
+func updateItem(item: ToDoItems, title: String, details: String, iconId: Int) {
+    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ToDoItems")
+    fetchRequest.predicate = NSPredicate(format: "title = %@", item.title!)
+    
+    do {
+        let results = try context.fetch(fetchRequest) as? [NSManagedObject]
+        if results?.count != 0 { // Atleast one was returned
+            
+            // In my case, I only updated the first item in results
+            results![0].setValue(Date(), forKey: "date")
+            results![0].setValue(title, forKey: "title")
+            results![0].setValue(details, forKey: "details")
+            results![0].setValue(iconId, forKey: "iconId")
         }
     } catch {
         print("Fetch Failed: \(error)")

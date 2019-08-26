@@ -10,60 +10,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--ToDo-->
-        <scene sceneID="6s4-nF-GQL">
-            <objects>
-                <tableViewController id="mhw-pj-fnV" customClass="ToDoTableViewController" customModule="ToDO" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="1fd-zn-oKa">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="checkmark" indentationWidth="10" reuseIdentifier="todocell" textLabel="5gk-sM-xXd" rowHeight="65" style="IBUITableViewCellStyleDefault" id="lRQ-SH-jZP" customClass="TableViewCell" customModule="ToDO" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="65"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="lRQ-SH-jZP" id="aC0-Qp-A9p">
-                                    <rect key="frame" x="0.0" y="0.0" width="335" height="64.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="bottomLeft" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5gk-sM-xXd">
-                                            <rect key="frame" x="15" y="0.0" width="320" height="64.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="mhw-pj-fnV" id="hlo-Gd-dAA"/>
-                            <outlet property="delegate" destination="mhw-pj-fnV" id="AaQ-2b-xGC"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="ToDo" id="dV2-TZ-tQe">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="7LA-jf-Na3">
-                            <connections>
-                                <action selector="addButtonPressed:" destination="mhw-pj-fnV" id="pJY-yo-mCd"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="addButton" destination="7LA-jf-Na3" id="hMV-7g-zEV"/>
-                        <outlet property="addToDoView" destination="73c-AO-AHE" id="JwL-yF-wum"/>
-                        <outlet property="backButton" destination="0PJ-sS-Agt" id="0XY-zs-nuD"/>
-                        <outlet property="detailsTextView" destination="fBK-IL-TtK" id="I1j-pp-DV6"/>
-                        <outlet property="newToDoCollectionView" destination="ALb-SM-9ca" id="Crz-D2-LYI"/>
-                        <outlet property="readyButton" destination="Cvm-I2-kEL" id="eDz-QW-edw"/>
-                        <outlet property="titleTextField" destination="9yB-PK-ztS" id="5ad-k9-Ohu"/>
-                    </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="XRh-T1-flC" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1070" y="-257"/>
-        </scene>
         <!--All To Do View Controller-->
         <scene sceneID="MgX-uz-dZU">
             <objects>
@@ -203,7 +149,6 @@
                                     </constraints>
                                     <state key="normal" title="Назад"/>
                                     <connections>
-                                        <action selector="backButtonPressed:" destination="mhw-pj-fnV" eventType="touchUpInside" id="JRy-CC-Whz"/>
                                         <action selector="cancelButtonPressed:" destination="MSt-fd-ygS" eventType="touchUpInside" id="86O-qm-7EE"/>
                                     </connections>
                                 </button>
@@ -299,7 +244,6 @@
                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </state>
                                     <connections>
-                                        <action selector="readyButtonPressed:" destination="mhw-pj-fnV" eventType="touchUpInside" id="skB-V4-3KE"/>
                                         <action selector="saveButtonPressed:" destination="MSt-fd-ygS" eventType="touchUpInside" id="O6H-Xs-EzL"/>
                                     </connections>
                                 </button>

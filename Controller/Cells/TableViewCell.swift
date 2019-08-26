@@ -31,10 +31,10 @@ class TableViewCell: UITableViewCell {
         let section = sender.tag / 1000
         if section == 0 {
             let item = notCompletedTasks[row]
-            updateItem(item: item)
+            updateIsCompletedItem(item: item)
         } else {
             let item = completedTasks[row]
-            updateItem(item: item)
+            updateIsCompletedItem(item: item)
         }
         delegate?.completedButtonPressed(onCell: self)
         

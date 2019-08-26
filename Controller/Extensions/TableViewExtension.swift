@@ -68,8 +68,10 @@ extension AllToDoViewController: UITableViewDelegate, UITableViewDataSource {
         if indexPath.section == 0 {
             if isFiltering {
                 toDoItem = filteredNotCompletedTasks[indexPath.row]
+                cell.isCompletedButton.isHidden = true
             } else {
                 toDoItem = notCompletedTasks[indexPath.row]
+                cell.isCompletedButton.isHidden = false
             }
             cell.titleLabel.attributedText = .none
             cell.titleLabel.text = toDoItem.title
@@ -81,8 +83,10 @@ extension AllToDoViewController: UITableViewDelegate, UITableViewDataSource {
         } else {
             if isFiltering {
                 toDoItem = filteredCompletedTasks[indexPath.row]
+                cell.isCompletedButton.isHidden = true
             } else {
                 toDoItem = completedTasks[indexPath.row]
+                cell.isCompletedButton.isHidden = false
             }
             let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: toDoItem.title ?? " ")
             attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSMakeRange(0, attributeString.length))
@@ -103,23 +107,34 @@ extension AllToDoViewController: UITableViewDelegate, UITableViewDataSource {
         if editingStyle == .delete {
             deleteItem(at: indexPath.section, at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            selectedItemIndex = indexPath.row
-            viewShow()
-            self.detailsTextView.text = toDoList[indexPath.row].details
-            self.titleTextField.text = toDoList[indexPath.row].title
-        }
+        } 
     }
     
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         selectedItemSection = indexPath.section
         selectedItemIndex = indexPath.row
         UIView.transition(with: tableView,
                           duration: 0.4,
                           options: .transitionCrossDissolve,
                           animations: { tableView.reloadData() })
+        var item = ToDoItems()
+        if isFiltering {
+            if indexPath.section == 0 {
+                item = filteredNotCompletedTasks[indexPath.row]
+            } else {
+                item = filteredCompletedTasks[indexPath.row]
+            }
+        } else {
+            if indexPath.section == 0 {
+                item = notCompletedTasks[indexPath.row]
+            } else {
+                item = completedTasks[indexPath.row]
+            }
+        }
+        viewShow(item.title!, item.details!)
         
     }
 }
