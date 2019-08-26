@@ -17,7 +17,19 @@ class AllToDoViewController: UIViewController, cellDelegate {
     var blurEffectView = UIVisualEffectView()
     let iconsArray = [#imageLiteral(resourceName: "money"),#imageLiteral(resourceName: "support"),#imageLiteral(resourceName: "house"),#imageLiteral(resourceName: "news"),#imageLiteral(resourceName: "job"),#imageLiteral(resourceName: "idea"),#imageLiteral(resourceName: "info"),#imageLiteral(resourceName: "message")]
     var selectedIcon: Int?
+    var ascendindSorting = true
+    let searchController = UISearchController(searchResultsController: nil)
+    var filteredCompletedTasks: [ToDoItems] = []
+    var filteredNotCompletedTasks: [ToDoItems] = []
+    var searchBarIsEmpty: Bool {
+        guard let text = searchController.searchBar.text else { return false }
+        return text.isEmpty
+    }
+    var isFiltering: Bool {
+        return searchController.isActive && !searchBarIsEmpty
+    }
     
+    @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var toDoTableView: UITableView!
@@ -25,6 +37,8 @@ class AllToDoViewController: UIViewController, cellDelegate {
     @IBOutlet weak var newToDoCollectionView: UICollectionView!
     @IBOutlet weak var detailsTextView: UITextView!
     @IBOutlet weak var titleTextField: UITextField!
+    @IBOutlet weak var sortButton: UIBarButtonItem!
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
     
 
     
@@ -36,6 +50,13 @@ class AllToDoViewController: UIViewController, cellDelegate {
 
     
     fileprivate func setupSettings() {
+        
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Поиск"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
+        
         toDoTableView.delegate = self
         toDoTableView.dataSource = self
         toDoTableView.rowHeight = UITableView.automaticDimension
@@ -43,6 +64,16 @@ class AllToDoViewController: UIViewController, cellDelegate {
         toDoTableView.tableFooterView = UIView()
         
         detailsTextView.text = ""
+        detailsTextView.layer.borderWidth = 1
+        detailsTextView.layer.borderColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+        detailsTextView.layer.cornerRadius = 10
+        
+        titleTextField.layer.borderWidth = 1
+        titleTextField.layer.borderColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+        titleTextField.layer.cornerRadius = 10
+        
+        saveButton.layer.cornerRadius = 10
+        saveButton.clipsToBounds = true
         newToDoCollectionView.delegate = self
         newToDoCollectionView.dataSource = self
         backButton.setImage(#imageLiteral(resourceName: "назад").withRenderingMode(.alwaysOriginal), for: .normal)
@@ -112,4 +143,48 @@ class AllToDoViewController: UIViewController, cellDelegate {
     @IBAction func addButtonPressed(_ sender: Any) {
         viewShow()
     }
+    
+    @IBAction func sortButtonPressed(_ sender: UIBarButtonItem) {
+        
+        ascendindSorting.toggle()
+        
+        if ascendindSorting == true {
+            sortButton.image = #imageLiteral(resourceName: "сортПоВозр")
+            ascendingSorting()
+        } else {
+            sortButton.image = #imageLiteral(resourceName: "сортПоУбыв")
+            descendingSorting()
+        }
+    }
+    
+    @IBAction func sortSelection(_ sender: UISegmentedControl) {
+        if ascendindSorting == true {
+            ascendingSorting()
+        } else {
+            descendingSorting()
+        }
+    }
+    
+    fileprivate func ascendingSorting() {
+        if segmentedControl.selectedSegmentIndex == 0 {
+            completedTasks = completedTasks.sorted(by: { $0.date!.compare($1.date!) == .orderedAscending })
+            notCompletedTasks = notCompletedTasks.sorted(by: { $0.date!.compare($1.date!) == .orderedAscending })
+        } else {
+            completedTasks = completedTasks.sorted(by: { $0.iconId > $1.iconId })
+            notCompletedTasks = notCompletedTasks.sorted(by: { $0.iconId > $1.iconId })
+        }
+        toDoTableView.reloadData()
+    }
+    
+    fileprivate func descendingSorting() {
+        if segmentedControl.selectedSegmentIndex == 0 {
+            completedTasks = completedTasks.sorted(by: { $0.date!.compare($1.date!) == .orderedDescending })
+            notCompletedTasks = notCompletedTasks.sorted(by: { $0.date!.compare($1.date!) == .orderedDescending })
+        } else {
+            completedTasks = completedTasks.sorted(by: { $0.iconId < $1.iconId })
+            notCompletedTasks = notCompletedTasks.sorted(by: { $0.iconId < $1.iconId })
+        }
+        toDoTableView.reloadData()
+    }
+    
 }

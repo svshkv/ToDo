@@ -29,8 +29,6 @@ class TableViewCell: UITableViewCell {
     @IBAction func isCompletedButtonPressed(_ sender: UIButton) {
         let row = sender.tag % 1000
         let section = sender.tag / 1000
-        print(row)
-        print(section)
         if section == 0 {
             let item = notCompletedTasks[row]
             updateItem(item: item)

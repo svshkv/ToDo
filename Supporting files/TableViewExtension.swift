@@ -22,8 +22,14 @@ extension AllToDoViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
+            if isFiltering {
+                return filteredNotCompletedTasks.count
+            }
             return notCompletedTasks.count
         case 1:
+            if isFiltering {
+                return filteredCompletedTasks.count
+            }
             return completedTasks.count
         default:
             return 1
@@ -57,21 +63,33 @@ extension AllToDoViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "todocell", for: indexPath) as! TableViewCell
+        var toDoItem = ToDoItems()
+        
         if indexPath.section == 0 {
+            if isFiltering {
+                toDoItem = filteredNotCompletedTasks[indexPath.row]
+            } else {
+                toDoItem = notCompletedTasks[indexPath.row]
+            }
             cell.titleLabel.attributedText = .none
-            cell.titleLabel.text = notCompletedTasks[indexPath.row].title
+            cell.titleLabel.text = toDoItem.title
             cell.titleLabel.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
             cell.isCompletedButton.setImage(#imageLiteral(resourceName: "Квадрат").withRenderingMode(.alwaysOriginal), for: .normal)
-            let iconId = notCompletedTasks[indexPath.row].iconId
+            let iconId = toDoItem.iconId
             cell.iconImageView.image = iconsArray[Int(iconId)].withRenderingMode(.alwaysOriginal)
             cell.isCompletedButton.tag = (indexPath.section * 1000) + indexPath.row
         } else {
-            let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: completedTasks[indexPath.row].title ?? " ")
+            if isFiltering {
+                toDoItem = filteredCompletedTasks[indexPath.row]
+            } else {
+                toDoItem = completedTasks[indexPath.row]
+            }
+            let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: toDoItem.title ?? " ")
             attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSMakeRange(0, attributeString.length))
             cell.titleLabel.attributedText = attributeString
             cell.titleLabel.textColor = #colorLiteral(red: 0, green: 0.5843137255, blue: 0.8823529412, alpha: 1)
             cell.isCompletedButton.setImage(#imageLiteral(resourceName: "галочкаВКвадрате").withRenderingMode(.alwaysOriginal), for: .normal)
-            let iconId = completedTasks[indexPath.row].iconId
+            let iconId = toDoItem.iconId
             cell.iconImageView.image = iconsArray[Int(iconId)].withRenderingMode(.alwaysOriginal)
             cell.isCompletedButton.tag = (indexPath.section * 1000) + indexPath.row
         }

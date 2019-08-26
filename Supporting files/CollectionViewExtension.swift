@@ -19,8 +19,8 @@ extension AllToDoViewController: UICollectionViewDataSource, UICollectionViewDel
         //myCell.backgroundColor = UIColor.white
         myCell.layer.cornerRadius = min(myCell.frame.size.height, myCell.frame.size.width) / 2.0
         myCell.layer.masksToBounds = true
+        myCell.layer.borderColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
         myCell.layer.borderWidth = 1
-        myCell.layer.borderColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         return myCell
     }
     

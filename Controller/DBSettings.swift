@@ -25,6 +25,7 @@ func addItem(title: String, isComleted: Bool = false, details: String, iconId: I
     itemObject.isCompleted = isComleted
     itemObject.details = details
     itemObject.iconId = Int64(iconId)
+    itemObject.date = Date()
     
     do {
         toDoList.append(itemObject)
@@ -90,6 +91,7 @@ func updateItem(item: ToDoItems) {
             
             // In my case, I only updated the first item in results
             results![0].setValue(!item.isCompleted, forKey: "isCompleted")
+            results![0].setValue(Date(), forKey: "date")
         }
     } catch {
         print("Fetch Failed: \(error)")
